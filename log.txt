@@ -13,3 +13,12 @@ Timestamp: Wed Dec 10 2025 17:49:46 GMT-0500 (Eastern Standard Time)
 URL: /favicon.ico
 Timestamp: Wed Dec 10 2025 17:49:46 GMT-0500 (Eastern Standard Time)
 
+::1 - - [03/Jan/2026:22:03:46 +0000] "GET /secreturl HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0"
+::1 - - [03/Jan/2026:22:03:49 +0000] "GET /secreturl HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0"
+::1 - - [03/Jan/2026:22:04:35 +0000] "GET /secreturl HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0"
+::1 - - [03/Jan/2026:22:05:57 +0000] "GET /index.html HTTP/1.1" 404 149 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0"
+::1 - - [03/Jan/2026:22:07:32 +0000] "GET /styles.css HTTP/1.1" 404 149 "http://localhost:8080/index.html" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0"
+::1 - - [03/Jan/2026:22:21:53 +0000] "GET /movies HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0"
+::1 - - [03/Jan/2026:22:22:13 +0000] "GET /movies HTTP/1.1" 200 1290 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0"
+::1 - - [03/Jan/2026:22:22:24 +0000] "GET /styles.css HTTP/1.1" 404 149 "http://localhost:8080/index.html" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0"
+::1 - - [03/Jan/2026:22:22:29 +0000] "GET /secreturl HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0"
