@@ -1,7 +1,7 @@
 const express = require('express');
-morgan = require('morgan');
-fs = require('fs'), 
-path = require('path');
+const morgan = require('morgan');
+const fs = require('fs'); 
+const path = require('path');
 const app = express();
 
 
@@ -10,29 +10,19 @@ let movies = [
     { title: 'Sinners', director: 'Ryan Coogler'},
     { title: 'The Dark Knight', director: 'Christopher Nolan'},
     { title: 'Django Unchained', director: 'Quentin Tarantino'},
-    { title: 'Dune', director: 'Denis Villeneuve'},
     { title: 'The Matrix', director: 'The Wachowskis'},
     { title: 'Dune: Part 2', director: 'Denis Villeneuve'},
     { title: 'Shutter Island', director: 'Martin Scorsese'},
     { title: 'Interstellar', director: 'Christopher Nolan'},
-    { title: 'The Wolf of Wall Street', director: 'Martin Scorsese'},
     { title: 'Captain America: The Winter Soldier', director: 'Anthony and Joe Russo'},
-    { title: 'Avengers: Endgame', director: 'Anthony and Joe Russo'},
-    { title: '1917', director: 'Sam Mendes'},
-    { title: 'The Social Network', director: 'David Fincher'},
-    { title: 'Tron: Legacy', director: 'Joseph Kosinski'},
-    { title: 'Indiana Jones and the Raiders of the Lost Ark', director: 'Steven Spielberg'},
-    { title: 'Rogue One: A Star Wars Story', director: 'Gareth Edwards'},
-    { title: 'Spider-Man: Into the Spiderverse', director: 'Bob Persichetti, Peter Ramsey, Rodney Rothman'},
-    { title: 'Spider-Man: Across the Spider-Verse', director: 'Joaquim Dos Santos, Kemp Powers, Justin K. Thompson'},
-    { title: 'Scott Pilgrim vs. The World', director: 'Edgar Wright'}
+    { title: '1917', director: 'Sam Mendes'}
 ];
 
 app.use(express.static('public'));
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'public'), {flags: 'a'})
 
 // setup the logger
-app.use(morgan('combined', {stream: accessLogStream}));
+app.use(morgan('combined'));
 
 app.get('/', (req, res) => {
   res.send('Welcome to my book club!\n');
@@ -45,6 +35,43 @@ app.get('/secreturl', (req, res) => {
 app.get('/movies', (req, res) => {
     res.json(movies);
 });
+
+app.get('/movies/:director', (req, res) => {
+    const director = req.params.director;
+});
+
+app.get('/movies/:title', (req, res) => {
+    const title = req.params.title;
+});
+
+app.get('/movies/:title/:genre', (req, res) => {
+    const title = req.params.title;
+    const genre = req.params.genre;
+    res.send(`You requested the movie "${title}" of genre "${genre}".`);
+});
+
+app.post('/movies', express.json(), (req, res) => {
+    const newMovie = req.body;
+    movies.push(newMovie);
+    res.status(201).json(newMovie);
+});
+
+app.post('/users', express.json(), (req, res) => {
+    const newUser = req.body;
+    res.status(201).json(newUser);
+});
+
+app.post('/users/:id/:favourites', express.json(), (req, res) => {
+    newFavourites = req.body;
+    res.status(201).json(newFavourites);
+});
+
+app.put('/users/:id/:usernames', express.json(), (req, res) => {
+    res.send(`User with ID ${req.params.id} has updated their username to ${req.params.usernames}.`);
+});
+
+
+
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
