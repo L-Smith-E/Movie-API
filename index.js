@@ -3,7 +3,8 @@ const morgan = require('morgan');
 const fs = require('fs'); 
 const path = require('path');
 const app = express();
-
+const bodyParser = require('body-parser');
+const uuid = require('uuid');
 
 let movies = [
     { title: 'Inception', director: 'Christopher Nolan'},
