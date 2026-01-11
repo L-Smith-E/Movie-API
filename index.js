@@ -3,7 +3,6 @@ const morgan = require('morgan');
 const fs = require('fs'); 
 const path = require('path');
 const app = express();
-const bodyParser = require('body-parser');
 const uuid = require('uuid');
 
 let movies = [
@@ -40,6 +39,7 @@ app.get('/secreturl', (req, res) => {
 app.get('/users', (req, res) => {
     res.json(users);
 });
+
 app.post('/users', express.json(), (req, res) => {
     let newUser = req.body;
 
@@ -61,15 +61,18 @@ app.post('/users/:id/favourites/movies', express.json(), (req, res) => {
     res.status(201).json(newFavourites);
 });
 
-app.put('/users/:id/users', express.json(), (req, res) => {
-    res.send(`User with ID ${req.params.id} has updated their username to ${req.params.usernames}.`);
+app.put('/users/:id', express.json(), (req, res) => {
+    res.send(`User with ID ${req.params.id} has updated their username to ${req.body.usernames}.`);
+    console.log("Update User Route Hit!");
 });
 
 app.delete('/users/:id', (req, res) => {
     res.send(`User with ID ${req.params.id} has been deleted.`);
+    console.log("Delete User Route Hit!");
 });
-app.delete('/users/:id/:favourites/:movies', (req, res) => {
+app.delete('/users/:id/favourites/movieId', (req, res) => {
     res.send(`User with ID ${req.params.id} has deleted one of their favourite movie.`);
+    console.log("Delete Favourite Movie Route Hit!");
 });
 
 //movie endpoints
@@ -77,7 +80,7 @@ app.get('/movies', (req, res) => {
     res.json(movies);
 });
 
-app.get('/movies/:directors', (req, res) => {
+app.get('/movies/directors/:director', (req, res) => {
     const director = req.params.director;
     res.send(`You requested movies directed by ${director}.`);
 });
@@ -87,10 +90,9 @@ app.get('/movies/:title', (req, res) => {
     res.send(`You requested the movie "${title}".`);
 });
 
-app.get('/movies/:title/:genre', (req, res) => {
-    const title = req.params.title;
+app.get('/movies/genre/:genre', (req, res) => {
     const genre = req.params.genre;
-    res.send(`You requested the movie "${title}" of genre "${genre}".`);
+    res.send(`You requested the genre "${genre}".`);
 });
 
 app.post('/movies', express.json(), (req, res) => {

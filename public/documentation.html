@@ -4,9 +4,373 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Documentation - Movie API Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .endpoint {
+            background-color: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-left: 4px solid #007bff;
+            border-radius: 5px;
+        }
+        .method {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            color: white;
+            margin-right: 10px;
+        }
+        .method.get {
+            background-color: #61affe;
+        }
+        .method.post {
+            background-color: #49cc90;
+        }
+        .method.put {
+            background-color: #fca130;
+        }
+        .method.delete {
+            background-color: #f93e3e;
+        }
+        .url {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            margin: 10px 0;
+        }
+        .section-title {
+            font-weight: bold;
+            margin-top: 15px;
+            color: #333;
+        }
+        .code-block {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        h1 {
+            color: #333;
+        }
+    </style>
     </head>
     <body>
     <h1>Movie API Demo Documentation</h1>
-    <p>This documentation provides an overview of the Movie API Demo project.</p>
+    <p>This documentation provides a complete overview of all available endpoints in the Movie API Demo project.</p>
+
+    <!-- Welcome Endpoint -->
+    <div class="endpoint">
+        <h2>Welcome Message</h2>
+        <div>
+            <span class="method get">GET</span>
+            <div class="url">/</div>
+        </div>
+        <div class="section-title">Description</div>
+        <p>Returns a welcome message to confirm the server is running.</p>
+        <div class="section-title">Query Parameters</div>
+        <p>None</p>
+        <div class="section-title">Request Body</div>
+        <p>Not applicable</p>
+        <div class="section-title">Response Format</div>
+        <div class="code-block">Welcome to my book club!\n</div>
+        <div class="section-title">Response Code</div>
+        <p>200 OK</p>
+    </div>
+
+    <!-- Secret URL Endpoint -->
+    <div class="endpoint">
+        <h2>Secret URL</h2>
+        <div>
+            <span class="method get">GET</span>
+            <div class="url">/secreturl</div>
+        </div>
+        <div class="section-title">Description</div>
+        <p>Returns secret content accessible at a hidden URL.</p>
+        <div class="section-title">Query Parameters</div>
+        <p>None</p>
+        <div class="section-title">Request Body</div>
+        <p>Not applicable</p>
+        <div class="section-title">Response Format</div>
+        <div class="code-block">This is a secret url with super top-secret content.</div>
+        <div class="section-title">Response Code</div>
+        <p>200 OK</p>
+    </div>
+
+    <!-- Get All Users -->
+    <div class="endpoint">
+        <h2>Get All Users</h2>
+        <div>
+            <span class="method get">GET</span>
+            <div class="url">/users</div>
+        </div>
+        <div class="section-title">Description</div>
+        <p>Returns an array of all registered users in the system.</p>
+        <div class="section-title">Query Parameters</div>
+        <p>None</p>
+        <div class="section-title">Request Body</div>
+        <p>Not applicable</p>
+        <div class="section-title">Response Format</div>
+        <div class="code-block">Array of user objects:
+[
+  {
+    "id": "uuid-string",
+    "name": "John Doe"
+  },
+  {
+    "id": "uuid-string",
+    "name": "Jane Smith"
+  }
+]</div>
+        <div class="section-title">Response Code</div>
+        <p>200 OK</p>
+    </div>
+
+    <!-- Create New User -->
+    <div class="endpoint">
+        <h2>Create New User</h2>
+        <div>
+            <span class="method post">POST</span>
+            <div class="url">/users</div>
+        </div>
+        <div class="section-title">Description</div>
+        <p>Creates a new user account in the system. Returns the newly created user object with an assigned UUID.</p>
+        <div class="section-title">Query Parameters</div>
+        <p>None</p>
+        <div class="section-title">Request Body Format</div>
+        <div class="code-block">{
+  "name": "string (required)"
+}</div>
+        <div class="section-title">Request Body Example</div>
+        <div class="code-block">{
+  "name": "Alice Johnson"
+}</div>
+        <div class="section-title">Response Format</div>
+        <div class="code-block">{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "name": "Alice Johnson"
+}</div>
+        <div class="section-title">Response Code</div>
+        <p>201 Created (on success) | 400 Bad Request (if name is missing)</p>
+    </div>
+
+    <!-- Add Favorite Movie for User -->
+    <div class="endpoint">
+        <h2>Add Favorite Movie for User</h2>
+        <div>
+            <span class="method post">POST</span>
+            <div class="url">/users/:id/favourites/movies</div>
+        </div>
+        <div class="section-title">Description</div>
+        <p>Adds a movie to a user's list of favorite movies.</p>
+        <div class="section-title">Query Parameters</div>
+        <p><strong>:id</strong> - The UUID of the user (path parameter)</p>
+        <div class="section-title">Request Body Format</div>
+        <div class="code-block">{
+  "title": "string",
+  "director": "string"
+}</div>
+        <div class="section-title">Request Body Example</div>
+        <div class="code-block">{
+  "title": "Inception",
+  "director": "Christopher Nolan"
+}</div>
+        <div class="section-title">Response Format</div>
+        <div class="code-block">{
+  "title": "Inception",
+  "director": "Christopher Nolan"
+}</div>
+        <div class="section-title">Response Code</div>
+        <p>201 Created</p>
+    </div>
+
+    <!-- Update User -->
+    <div class="endpoint">
+        <h2>Update User</h2>
+        <div>
+            <span class="method put">PUT</span>
+            <div class="url">/users/:id</div>
+        </div>
+        <div class="section-title">Description</div>
+        <p>Updates the username of an existing user.</p>
+        <div class="section-title">Query Parameters</div>
+        <p><strong>:id</strong> - The UUID of the user (path parameter)</p>
+        <div class="section-title">Request Body Format</div>
+        <div class="code-block">{
+  "usernames": "string"
+}</div>
+        <div class="section-title">Request Body Example</div>
+        <div class="code-block">{
+  "usernames": "NewUsername"
+}</div>
+        <div class="section-title">Response Format</div>
+        <div class="code-block">User with ID [user-id] has updated their username to [new-username].</div>
+        <div class="section-title">Response Code</div>
+        <p>200 OK</p>
+    </div>
+
+    <!-- Delete User -->
+    <div class="endpoint">
+        <h2>Delete User</h2>
+        <div>
+            <span class="method delete">DELETE</span>
+            <div class="url">/users/:id</div>
+        </div>
+        <div class="section-title">Description</div>
+        <p>Deletes a user from the system.</p>
+        <div class="section-title">Query Parameters</div>
+        <p><strong>:id</strong> - The UUID of the user (path parameter)</p>
+        <div class="section-title">Request Body</div>
+        <p>Not applicable</p>
+        <div class="section-title">Response Format</div>
+        <p>No content returned</p>
+        <div class="section-title">Response Code</div>
+        <p>204 No Content</p>
+    </div>
+
+    <!-- Delete Favorite Movie for User -->
+    <div class="endpoint">
+        <h2>Delete Favorite Movie for User</h2>
+        <div>
+            <span class="method delete">DELETE</span>
+            <div class="url">/users/:id/favourites/:movieId</div>
+        </div>
+        <div class="section-title">Description</div>
+        <p>Removes a movie from a user's list of favorite movies.</p>
+        <div class="section-title">Query Parameters</div>
+        <p><strong>:id</strong> - The UUID of the user (path parameter)<br>
+           <strong>:movieId</strong> - The ID of the movie to remove (path parameter)</p>
+        <div class="section-title">Request Body</div>
+        <p>Not applicable</p>
+        <div class="section-title">Response Format</div>
+        <p>No content returned</p>
+        <div class="section-title">Response Code</div>
+        <p>204 No Content</p>
+    </div>
+
+    <!-- Get All Movies -->
+    <div class="endpoint">
+        <h2>Get All Movies</h2>
+        <div>
+            <span class="method get">GET</span>
+            <div class="url">/movies</div>
+        </div>
+        <div class="section-title">Description</div>
+        <p>Returns an array of all available movies in the database.</p>
+        <div class="section-title">Query Parameters</div>
+        <p>None</p>
+        <div class="section-title">Request Body</div>
+        <p>Not applicable</p>
+        <div class="section-title">Response Format</div>
+        <div class="code-block">Array of movie objects:
+[
+  {
+    "title": "Inception",
+    "director": "Christopher Nolan"
+  },
+  {
+    "title": "Sinners",
+    "director": "Ryan Coogler"
+  }
+]</div>
+        <div class="section-title">Response Code</div>
+        <p>200 OK</p>
+    </div>
+
+    <!-- Get Movies by Director -->
+    <div class="endpoint">
+        <h2>Get Movies by Director</h2>
+        <div>
+            <span class="method get">GET</span>
+            <div class="url">/movies/:director</div>
+        </div>
+        <div class="section-title">Description</div>
+        <p>Returns movies filtered by a specific director.</p>
+        <div class="section-title">Query Parameters</div>
+        <p><strong>:director</strong> - The name of the director (path parameter)</p>
+        <div class="section-title">Request Body</div>
+        <p>Not applicable</p>
+        <div class="section-title">Response Format</div>
+        <div class="code-block">You requested movies directed by [director-name].</div>
+        <div class="section-title">Response Code</div>
+        <p>200 OK</p>
+    </div>
+
+    <!-- Get Movie by Title -->
+    <div class="endpoint">
+        <h2>Get Movie by Title</h2>
+        <div>
+            <span class="method get">GET</span>
+            <div class="url">/movies/:title</div>
+        </div>
+        <div class="section-title">Description</div>
+        <p>Returns a specific movie by its title.</p>
+        <div class="section-title">Query Parameters</div>
+        <p><strong>:title</strong> - The title of the movie (path parameter)</p>
+        <div class="section-title">Request Body</div>
+        <p>Not applicable</p>
+        <div class="section-title">Response Format</div>
+        <div class="code-block">You requested the movie "[movie-title]".</div>
+        <div class="section-title">Response Code</div>
+        <p>200 OK</p>
+    </div>
+
+    <!-- Get Movie by Genre -->
+    <div class="endpoint">
+        <h2>Get Movies by Genre</h2>
+        <div>
+            <span class="method get">GET</span>
+            <div class="url">/movies/genre/:genre</div>
+        </div>
+        <div class="section-title">Description</div>
+        <p>Returns movies filtered by genre.</p>
+        <div class="section-title">Query Parameters</div>
+           <strong>:genre</strong> - The genre the user is looking for</p>
+        <div class="section-title">Request Body</div>
+        <p>Not applicable</p>
+        <div class="section-title">Response Format</div>
+        <div class="code-block">You requested the movies of genre "[genre]".</div>
+        <div class="section-title">Response Code</div>
+        <p>200 OK</p>
+    </div>
+
+    <!-- Add New Movie -->
+    <div class="endpoint">
+        <h2>Add New Movie</h2>
+        <div>
+            <span class="method post">POST</span>
+            <div class="url">/movies</div>
+        </div>
+        <div class="section-title">Description</div>
+        <p>Adds a new movie to the database.</p>
+        <div class="section-title">Query Parameters</div>
+        <p>None</p>
+        <div class="section-title">Request Body Format</div>
+        <div class="code-block">{
+  "title": "string",
+  "director": "string"
+}</div>
+        <div class="section-title">Request Body Example</div>
+        <div class="code-block">{
+  "title": "Oppenheimer",
+  "director": "Christopher Nolan"
+}</div>
+        <div class="section-title">Response Format</div>
+        <div class="code-block">{
+  "title": "Oppenheimer",
+  "director": "Christopher Nolan"
+}</div>
+        <div class="section-title">Response Code</div>
+        <p>201 Created</p>
+    </div>
+
     </body>
 </html>
