@@ -20,6 +20,10 @@ passport.use(new LocalStrategy(
                 console.log('Incorrect username');
                 return callback(null, false, { message: 'Incorrect username or password.', });
             }
+            if (!user.validatePassword(password)) {
+                console.log('Incorrect password');
+                return callback(null, false, { message: 'Incorrect username or password.', });
+            }
             console.log('finished');
             return callback(null, user);
         })

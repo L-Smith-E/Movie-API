@@ -7,6 +7,7 @@ const uuid = require('uuid');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
+const {check, validationResult} = require('express-validator');
 
 const Movie = Models.Movie;
 const User = Models.User;
@@ -25,6 +26,8 @@ app.use(express.json());
 app.use(morgan('combined'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
+const cors = require('cors');
+app.use(cors());
 let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
@@ -37,6 +40,17 @@ app.get('/secreturl', (req, res) => {
   res.send('This is a secret url with super top-secret content.');
 });
 
+let allowedORigins = ['http://localhost:8080', 'http://testsite.com'];
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        if (allowedORigins.indexOf(origin) === -1) {
+            const message = 'The CORS policy for this site does not allow access from the specified origin.';
+            return callback(new Error(message), false);
+        }
+        return callback(null, true);
+    }
+}));
 
 //user endpoints -----------------------------------------------------------------------------------------------
 //test - Get All Users - not for production ✅
@@ -54,7 +68,19 @@ app.get('/users', async(req, res) => {
 });
 
 //Allow new users to register ✅
-app.post('/users', async (req, res) => {
+app.post('/users', 
+    [
+        check('username', 'Username is required').isLength({min: 5}),
+        check('username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+        check('password', 'Password is required').not().isEmpty(),
+        check('email', 'Email does not appear to be valid').isEmail()
+    ],  async (req, res) => {
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
+    
+    let hashedPassword = User.hashPassword(req.body.password);
     await User.findOne({ username: req.body.username })
     .then((user) => {
         if (user) {
@@ -62,7 +88,7 @@ app.post('/users', async (req, res) => {
         } else {
             User.create({
                 username: req.body.username,
-                password: req.body.password,
+                password: hashedPassword,
                 email: req.body.email,
                 birthdate: req.body.birthdate
             })
@@ -79,22 +105,22 @@ app.post('/users', async (req, res) => {
     });
 });
 
-//Allow users to add a movie to their list of favorites ☑️
-app.post('/users/:id/favourites/:movies', async (req, res) => {
-    await User.findByIdAndUpdate(
-        { _id: req.params.id },
-        { $push: { FavoriteMovies: req.params.movies} })
-    .then((user) => {
-        res.status(201).send(`${req.body.Username} added a new favourite movie.`);
-    })
-    .catch((error) => {
-        console.error(error);  
-        res.status(500).send('Error: ' + error);
-    });
-});
+// //Allow users to add a movie to their list of favorites ☑️
+// app.post('/users/:id/favourites/:movies', passport.authenticate('jwt', {session: false}), async (req, res) => {
+//     await User.findByIdAndUpdate(
+//         { _id: req.params.id },
+//         { $push: { FavoriteMovies: req.params.movies} })
+//     .then((user) => {
+//         res.status(201).send(`${req.body.Username} added a new favourite movie.`);
+//     })
+//     .catch((error) => {
+//         console.error(error);  
+//         res.status(500).send('Error: ' + error);
+//     });
+// });
 
 //Allow users to add a movie to their list of favorites - updated version to check movie DB first ✅
-app.post('/users/:username/favourites', async (req, res) => {
+app.post('/users/:username/favourites', passport.authenticate('jwt', {session: false}), async (req, res) => {
     //Check to see if movie already exists in movie database
     await Movie.findOne({ title: req.body.title })
     .then((movie) => {  
@@ -141,13 +167,16 @@ app.post('/users/:username/favourites', async (req, res) => {
 });
 
 //Allow users to update their user info (username, password, email, date of birth) ✅
-app.put('/users/:username', express.json(), async (req, res) => {
+app.put('/users/:username', passport.authenticate('jwt', {session: false}), async (req, res) => {
     // const currentUsername = User.findById(req.params.id).Username;
     // const newUsername = User.findById(req.params.id).Usernames;
     // const currentPassword = User.findById(req.params.id).Password; // Safe practice?
     // const currentEmail = User.findById(req.params.id).Email;
     // const currentBirthdate = User.findById(req.params.id).Birthdate;
-
+//Check condition
+if (req.user.username !== req.params.username) {
+    return res.status(403).send('You are not authorized to update this user.');
+}
     await User.findOneAndUpdate(
         { username: req.params.username },
         { $set:
@@ -172,7 +201,7 @@ app.put('/users/:username', express.json(), async (req, res) => {
 });
 
 //Allow existing users to deregister ✅
-app.delete('/users/:username', async (req, res) => {
+app.delete('/users/:username', passport.authenticate('jwt', {session: false}), async (req, res) => {
     await User.findOneAndDelete({ username: req.params.username })
     .then((user) => {
         if (!user) {
@@ -190,7 +219,7 @@ app.delete('/users/:username', async (req, res) => {
 });
 
 //Allow users to remove a movie from their list of favorites ✅
-app.delete('/users/:username/favourites/:movieid', async(req, res) => {
+app.delete('/users/:username/favourites/:movieid', passport.authenticate('jwt', {session: false}), async(req, res) => {
     await Movie.findOne({ title: req.params.movieid })
     .then((movie) => {
         if (movie) {
@@ -236,7 +265,7 @@ app.get('/movies', passport.authenticate('jwt', {session: false}), async (req, r
 });
 
 // Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user ✅
-app.get('/movies/:title', async (req, res) => {
+app.get('/movies/:title', passport.authenticate('jwt', {session: false}), async (req, res) => {
     await Movie.findOne({ title: req.params.title })
     .then((movie) => {
         res.status(200).send(`Here is your requested information for "${req.params.title}: ${JSON.stringify(movie)}". `);
@@ -249,7 +278,7 @@ app.get('/movies/:title', async (req, res) => {
 });
 
 //Return data about a director (bio, birth year, death year) by name (e.g., “Christopher Nolan”)    ✅
-app.get('/movies/directors/:director', async(req, res) => {
+app.get('/movies/directors/:director', passport.authenticate('jwt', {session: false}), async(req, res) => {
     await Movie.findOne({ 'director.name': req.params.director })
     .then((movie) => {
         if (!movie) {
@@ -267,7 +296,7 @@ app.get('/movies/directors/:director', async(req, res) => {
 });
 
 // Return data about a genre (description) by name/title (e.g., “Thriller”) ✅
-app.get('/movies/genre/:genre', async (req, res) => {
+app.get('/movies/genre/:genre', passport.authenticate('jwt', {session: false}), async (req, res) => {
     await Movie.findOne({ "genre.name": req.params.genre })
     .then((genreD) => {
         if (!genreD) {
@@ -285,7 +314,7 @@ app.get('/movies/genre/:genre', async (req, res) => {
 });
 
 //Allow new movies to be added to the database
-app.post('/movies', express.json(), async(req, res) => {
+app.post('/movies', express.json(), passport.authenticate('jwt', {session: false}), async(req, res) => {
     await Movie.create({
         Title: req.body.Title,
         Description: req.body.Description,
