@@ -4,28 +4,17 @@ const fs = require('fs');
 const path = require('path');
 const app = express();
 const uuid = require('uuid');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 
 const Movie = Models.Movie;
 const User = Models.User;
 
+
 mongoose.connect('mongodb://localhost:27017/cfdb');
 //, { useNewUrlParser: true, useUnifiedTopology: true } - no longer necessary in mongoose 6+
 
-// let movies = [
-//     { title: 'Inception', director: 'Christopher Nolan'},
-//     { title: 'Sinners', director: 'Ryan Coogler'},
-//     { title: 'The Dark Knight', director: 'Christopher Nolan'},
-//     { title: 'Django Unchained', director: 'Quentin Tarantino'},
-//     { title: 'The Matrix', director: 'The Wachowskis'},
-//     { title: 'Dune: Part 2', director: 'Denis Villeneuve'},
-//     { title: 'Shutter Island', director: 'Martin Scorsese'},
-//     { title: 'Interstellar', director: 'Christopher Nolan'},
-//     { title: 'Captain America: The Winter Soldier', director: 'Anthony and Joe Russo'},
-//     { title: '1917', director: 'Sam Mendes'}
-// ];
-let users = [];
 
 app.use(express.static('public'));
 //const accessLogStream = fs.createWriteStream(path.join(__dirname, 'public'), {flags: 'a'})
@@ -34,6 +23,11 @@ app.use(express.json());
 
 // setup the logger
 app.use(morgan('combined'));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
 
 app.get('/', (req, res) => {
   res.send('Welcome to my book club!\n');
@@ -228,14 +222,14 @@ app.delete('/users/:username/favourites/:movieid', async(req, res) => {
 //movie endpoints -----------------------------------------------------------------------------------------------
 
 // Return a list of ALL movies to the user ✅
-app.get('/movies', async (req, res) => {
+app.get('/movies', passport.authenticate('jwt', {session: false}), async (req, res) => {
     await Movie.find()
     .then((movies) => {
         res.status(200).json(movies);
     })
     .catch((error) => {
-        console.error(error);
-        res.status(500).send('Error: ' + error);
+        console.error(error.message);
+        res.status(500).send('Error: ' + error.message);
     });
     //res.json(movies);
     console.log("Get All Movies Route Hit!");
