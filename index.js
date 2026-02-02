@@ -12,8 +12,9 @@ const {check, validationResult} = require('express-validator');
 const Movie = Models.Movie;
 const User = Models.User;
 
+mongoose.connect('process.env.CONNECTION_URI');
 
-mongoose.connect('mongodb://localhost:27017/cfdb');
+//mongoose.connect('mongodb://localhost:27017/cfdb');
 //, { useNewUrlParser: true, useUnifiedTopology: true } - no longer necessary in mongoose 6+
 
 

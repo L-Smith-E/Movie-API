@@ -1,0 +1,28 @@
+{"_id":{"$oid":"65a1f00123456789abcdef01"},"name":"Leonardo DiCaprio","bio":"An American actor known for his work in biopics and period films.","birthYear":1974,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef02"},"name":"Joseph Gordon-Levitt","bio":"An American actor, filmmaker, and musician.","birthYear":1981,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef03"},"name":"Elliot Page","bio":"A Canadian actor and producer known for Juno and Inception.","birthYear":1987,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef04"},"name":"Michael B. Jordan","bio":"An American actor known for Creed and Black Panther.","birthYear":1987,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef05"},"name":"Hailee Steinfeld","bio":"An American actress and singer who gained fame in True Grit.","birthYear":1996,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef06"},"name":"Jack O'Connell","bio":"An English actor known for Unbroken and Skins.","birthYear":1990,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef07"},"name":"Christian Bale","bio":"An English actor known for his versatility and physical transformations.","birthYear":1974,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef08"},"name":"Heath Ledger","bio":"An Australian actor who won a posthumous Oscar for The Dark Knight.","birthYear":1979,"deathYear":2008}
+{"_id":{"$oid":"65a1f00123456789abcdef09"},"name":"Aaron Eckhart","bio":"An American actor known for In the Company of Men.","birthYear":1968,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef10"},"name":"Jamie Foxx","bio":"An American actor, comedian, and singer.","birthYear":1967,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef11"},"name":"Christoph Waltz","bio":"An Austrian-German actor known for his collaborations with Tarantino.","birthYear":1956,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef13"},"name":"Keanu Reeves","bio":"A Canadian actor known for The Matrix and John Wick.","birthYear":1964,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef14"},"name":"Laurence Fishburne","bio":"An American actor known for his role as Morpheus.","birthYear":1961,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef15"},"name":"Carrie-Anne Moss","bio":"A Canadian actress known for playing Trinity.","birthYear":1967,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef16"},"name":"Timothée Chalamet","bio":"An American-French actor known for Dune and Call Me By Your Name.","birthYear":1995,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef17"},"name":"Zendaya","bio":"An American actress and singer known for Euphoria.","birthYear":1996,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef18"},"name":"Rebecca Ferguson","bio":"A Swedish actress known for Mission: Impossible.","birthYear":1983,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef19"},"name":"Mark Ruffalo","bio":"An American actor known for playing the Hulk.","birthYear":1967,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef20"},"name":"Ben Kingsley","bio":"An English actor who won an Oscar for Gandhi.","birthYear":1943,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef21"},"name":"Matthew McConaughey","bio":"An American actor known for his 'McConaissance'.","birthYear":1969,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef22"},"name":"Anne Hathaway","bio":"An American actress and recipient of various accolades.","birthYear":1982,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef23"},"name":"Jessica Chastain","bio":"An American actress known for her roles in feminist-themed films.","birthYear":1977,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef24"},"name":"Chris Evans","bio":"An American actor known for playing Captain America.","birthYear":1981,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef25"},"name":"Samuel L. Jackson","bio":"One of the highest-grossing actors of all time.","birthYear":1948,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef26"},"name":"Scarlett Johansson","bio":"An American actress known for her role as Black Widow.","birthYear":1984,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef27"},"name":"George MacKay","bio":"An English actor known for 1917 and Captain Fantastic.","birthYear":1992,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef28"},"name":"Dean-Charles Chapman","bio":"An English actor known for Game of Thrones.","birthYear":1997,"deathYear":null}
+{"_id":{"$oid":"65a1f00123456789abcdef29"},"name":"Richard Madden","bio":"A Scottish actor known for Bodyguard and Game of Thrones.","birthYear":1986,"deathYear":null}
