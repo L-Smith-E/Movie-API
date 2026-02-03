@@ -12,7 +12,8 @@ const {check, validationResult} = require('express-validator');
 const Movie = Models.Movie;
 const User = Models.User;
 
-mongoose.connect('process.env.CONNECTION_URI');
+const port = process.env.PORT || 8080;
+mongoose.connect(process.env.CONNECTION_URI);
 
 //mongoose.connect('mongodb://localhost:27017/cfdb');
 //, { useNewUrlParser: true, useUnifiedTopology: true } - no longer necessary in mongoose 6+
@@ -343,7 +344,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!: ' + err.message);
 });
 
- const port = process.env.PORT || 8080;
+ 
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running on port ${port}`);
 });
